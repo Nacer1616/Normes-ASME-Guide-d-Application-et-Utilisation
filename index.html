@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Normes ASME</title>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            background-color: #f0f2f5;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        header {
+            background-color: #004d99;
+            color: white;
+            width: 100%;
+            text-align: center;
+            padding: 20px 0;
+            font-size: 24px;
+            font-weight: bold;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        .container {
+            width: 90%;
+            max-width: 600px;
+            margin: 20px 0;
+        }
+        .standard-item {
+            background: white;
+            border-radius: 8px;
+            padding: 15px 20px;
+            margin-bottom: 10px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+        .standard-item:active {
+            background: #e9ecef;
+        }
+        .standard-title {
+            font-size: 18px;
+            font-weight: bold;
+            color: #333;
+        }
+
+        /* Modal Styles */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0,0,0,0.5);
+            align-items: center;
+            justify-content: center;
+        }
+        .modal-content {
+            background-color: white;
+            border-radius: 12px;
+            width: 85%;
+            max-width: 500px;
+            padding: 20px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            text-align: center;
+        }
+        .modal-header {
+            font-size: 22px;
+            font-weight: bold;
+            margin-bottom: 15px;
+            color: #004d99;
+        }
+        .modal-body {
+            font-size: 16px;
+            color: #555;
+            margin-bottom: 20px;
+            line-height: 1.5;
+        }
+        .modal-body strong {
+            color: #333;
+        }
+        .close-btn {
+            background-color: #004d99;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 6px;
+            font-size: 16px;
+            cursor: pointer;
+            width: 100%;
+        }
+        .close-btn:active {
+            background-color: #003366;
+        }
+    </style>
+</head>
+<body>
+
+    <header>Normes ASME</header>
+
+    <div class="container" id="standards-list">
+        <!-- List will be injected here by JS -->
+    </div>
+
+    <!-- Modal -->
+    <div id="detailsModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header" id="modal-title"></div>
+            <div class="modal-body" id="modal-body"></div>
+            <button class="close-btn" onclick="closeModal()">Fermer</button>
+        </div>
+    </div>
+
+    <script>
+        const standards = [
+            {"name": "ASME BPVC Section I", "domain": "Chaudières de puissance", "usage": "Règles pour la construction de chaudières de puissance."},
+            {"name": "ASME BPVC Section II", "domain": "Matériaux", "usage": "Spécifications de matériaux (acier, aluminium, etc.)."},
+            {"name": "ASME BPVC Section III", "domain": "Nucléaire", "usage": "Règles pour la construction des composants d'installations nucléaires."},
+            {"name": "ASME BPVC Section IV", "domain": "Chaudières de chauffage", "usage": "Règles pour la construction de chaudières de chauffage."},
+            {"name": "ASME BPVC Section V", "domain": "Examens non destructifs", "usage": "Méthodes et exigences pour les examens non destructifs."},
+            {"name": "ASME BPVC Section VIII", "domain": "Récipients sous pression", "usage": "Règles pour la construction des récipients sous pression."},
+            {"name": "ASME BPVC Section IX", "domain": "Soudage et brasage", "usage": "Qualifications pour les procédures de soudage et de brasage."},
+            {"name": "ASME B31.1", "domain": "Tuyauterie de puissance", "usage": "Conception, matériaux, fabrication, montage, essais et inspection de la tuyauterie de puissance."},
+            {"name": "ASME B31.3", "domain": "Tuyauterie de procédé", "usage": "Tuyauterie typiquement trouvée dans les raffineries de pétrole et les usines chimiques."},
+            {"name": "ASME B16.5", "domain": "Brides de tuyauterie", "usage": "Dimensions et tolérances pour les brides de tuyauterie et raccords à brides."}
+        ];
+
+        const listContainer = document.getElementById('standards-list');
+        const modal = document.getElementById('detailsModal');
+        const modalTitle = document.getElementById('modal-title');
+        const modalBody = document.getElementById('modal-body');
+
+        function renderList() {
+            standards.forEach((std, index) => {
+                const item = document.createElement('div');
+                item.className = 'standard-item';
+                item.innerHTML = `<div class="standard-title">${std.name}</div>`;
+                item.onclick = () => openModal(index);
+                listContainer.appendChild(item);
+            });
+        }
+
+        function openModal(index) {
+            const std = standards[index];
+            modalTitle.innerText = std.name;
+            modalBody.innerHTML = `
+                <p><strong>Domaine :</strong><br>${std.domain}</p>
+                <p><strong>Utilisation :</strong><br>${std.usage}</p>
+            `;
+            modal.style.display = 'flex';
+        }
+
+        function closeModal() {
+            modal.style.display = 'none';
+        }
+
+        // Initialize
+        renderList();
+    </script>
+</body>
+</html>
